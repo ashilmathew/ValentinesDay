@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Question</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap">
+    <style>
+        body {
+            font-family: 'Patrick Hand', cursive;
+            text-align: center;
+            background-color: #ffebf2; /* Light rose color */
+            margin: 0;
+            padding: 0;
+        }
+
+        #header-container {
+            margin-top: 20px;
+            padding: 20px;
+            display: none;
+        }
+
+        #cute-girl {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #question-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffe6f2; /* Lighter rose color */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        h1 {
+            color: #ff4d6d; /* Pink color for the question */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #ff4d6d; /* Pink color for the button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #e63b5e; /* Darker pink on hover */
+        }
+
+        #explosion {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('trinity-bomb-nuclear-weapon.gif'); 
+            background-size: cover;
+            z-index: 9999;
+        }
+
+        #explosion p {
+            font-size: 70px;
+            color: #ff4d6d;
+            margin-top: 40%;
+        }
+
+        #valentine-message {
+            display: none;
+            color: #ff4d6d;
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container">
+        <img id="cute-girl" src="mythikore-anime-girl.gif" alt="Cute Anime Girl">
+    </div>
+
+    <div id="question-container">
+        <h1>Will you be my Valentine?</h1>
+        <button onclick="handleYes()">Yes</button>
+        <button onclick="handleNo()">No</button>
+    </div>
+
+    <div id="explosion">
+        <p id="explosion-message">You don't deserve me</p>
+    </div>
+
+    <div id="valentine-message">
+        <p>Thanks for being my Valentine!</p>
+        <img src="anime.gif" alt="Thanks GIF">
+    </div>
+
+    <script>
+        function fadeIn(element) {
+            element.style.display = "block";
+            setTimeout(function () {
+                element.style.opacity = 1;
+            }, 100);
+        }
+
+        function fadeOut(element) {
+            setTimeout(function () {
+                element.style.opacity = 0;
+                setTimeout(function () {
+                    element.style.display = "none";
+                }, 1000); // Adjust the duration of the fade-out effect
+            }, 3000); // Adjust the delay before starting the fade-out effect
+        }
+
+        function moveButtonRandomly() {
+            const button = document.querySelector("#question-container button:last-child");
+            const maxWidth = window.innerWidth - button.offsetWidth;
+            const maxHeight = window.innerHeight - button.offsetHeight;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            button.style.left = `${randomX}px`;
+            button.style.top = `${randomY}px`;
+        }
+
+        let noCount = 0;
+
+        const imageSources = [
+            "im-sad.gif",
+            "kawaii-cute.gif",
+            "cute.gif",
+            "menhera-melancholy.gif",
+            "cry-crying.gif"
+        ];
+
+        window.onload = function () {
+            const headerContainer = document.getElementById("header-container");
+            const questionContainer = document.getElementById("question-container");
+
+            fadeIn(headerContainer);
+
+            setTimeout(function () {
+                fadeIn(questionContainer);
+            }, 500);
+        };
+
+        function handleYes() {
+            document.getElementById("header-container").style.display = "none";
+            document.getElementById("question-container").style.display = "none";
+            document.getElementById("valentine-message").style.display = "block";
+            moveButtonRandomly();
+        }
+
+        function handleNo() {
+            noCount++;
+
+            if (noCount < 6) {
+                const questions = [
+                    "Think it again!",
+                    "Please be my Valentine!!",
+                    "Listen to me!!!",
+                    "Please, I will cry....:/",
+                    "I'm asking you for the last time! "
+                ];
+
+                const newImageIndex = noCount - 1;
+                const newImageSource = imageSources[newImageIndex];
+
+                document.getElementById("header-container").innerHTML = `
+                    <img id="cute-girl" src="${newImageSource}" alt="Cute Anime Girl">
+                `;
+
+                document.getElementById("question-container").innerHTML = `
+                    <h1>${questions[noCount - 1]}</h1>
+                    <button onclick="handleYes()">Yes</button>
+                    <button onclick="handleNo()">No</button>
+                `;
+
+                fadeIn(document.getElementById("header-container"));
+                fadeIn(document.getElementById("question-container"));
+            } else {
+                document.getElementById("question-container").style.display = "none";
+                fadeIn(document.getElementById("explosion"));
+                fadeOut(document.getElementById("explosion-message"));
+                fadeOut(document.getElementById("valentine-message"));
+            }
+
+            moveButtonRandomly();
+        }
+    </script>
+</body>
+</html>
+
